@@ -1,4 +1,4 @@
-\# Create Book
+\# Retrieve Book
 
 
 
@@ -6,13 +6,13 @@ from bookshelf.models import Book
 
 
 
-\# Create a Book instance
+\# Retrieve the book we created by ID
 
-book = Book.objects.create(title="1984", author="George Orwell", publication\_year=1949)
+book = Book.objects.get(id=1)
 
 book
 
-\# <Book: 1984 by George Orwell (1949)>
+\# Expected output: <Book: 1984 by George Orwell (1949)>
 
 
 
