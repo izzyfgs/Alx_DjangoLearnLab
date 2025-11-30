@@ -1,48 +1,17 @@
-from django.db import models  # Make sure this import is at the top
+from django.db import models
 
-
-# Author model: represents a writer who can have many books
+# Defines the Author model, representing an author with a name.
 class Author(models.Model):
-    # Stores the name of the author
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
-
-# Book model: represents a book written by an Author
-# Demonstrates a one-to-many relationship (one Author → many Books)
+# Defines the Book model, representing a book with a title, publication year, and an author.
 class Book(models.Model):
-    # Title of the book
-    title = models.CharField(max_length=255)
-
-    # Year the book was published
+    title = models.CharField(max_length=100)
     publication_year = models.IntegerField()
-
-    # ForeignKey establishes the one-to-many relationship
-    author = models.ForeignKey(
-        Author,
-        related_name="books",  # Allows nested serialization via author.books
-        on_delete=models.CASCADE
-    )
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
 
     def __str__(self):
-        return f"{self.title} ({self.publication_year})"
-
-
-
-# Create your models here.
-
-from django.db import models
-
-
-
-
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"{self.title} by {self.author}"  
-
- 
+        return self.title
