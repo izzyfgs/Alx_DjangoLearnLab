@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 from django.shortcuts import render
 
 # Create your views here.
-=======
+
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Book
@@ -29,4 +29,4 @@ class BookViewSet(viewsets.ModelViewSet):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
->>>>>>> ce24b6e068ab3e8d4bca815c263a326773d82876
+

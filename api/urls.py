@@ -9,3 +9,11 @@ urlpatterns = [
     path('books/', BookList.as_view(), name='book-list'),
     path('', include(router.urls)),
 ]
+from rest_framework import routers
+from .views import AuthorViewSet, BookViewSet
+
+router = routers.DefaultRouter()
+router.register(r'authors', AuthorViewSet)
+router.register(r'books', BookViewSet)
+
+urlpatterns = router.urls
