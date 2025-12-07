@@ -1,0 +1,15 @@
+<h1>All Posts</h1>
+
+<a href="{% url 'post-create' %}">Create New Post</a>
+
+<ul>
+  {% for post in posts %}
+    <li>
+      <a href="{% url 'post-detail' post.pk %}">
+        <h2>{{ post.title }}</h2>
+      </a>
+      <p>{{ post.content|truncatewords:20 }}</p>
+      <small>By {{ post.author }} on {{ post.created_at }}</small>
+    </li>
+  {% endfor %}
+</ul>

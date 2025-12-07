@@ -76,9 +76,15 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 
 DATABASES = {
     'default': {
+
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
         'USER': 'postgres',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_django_blog',
+        'USER': 'postgres',
+        'PASSWORD': 'NewPass123',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -118,11 +124,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'blog/static'),
-]
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = []
+LOGIN_REDIRECT_URL = '/profile/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+
+
+# django_blog/settings.py
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+
+
+
 
 
 

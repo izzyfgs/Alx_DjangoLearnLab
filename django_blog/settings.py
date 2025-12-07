@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 """
 Django settings for django_blog project.
@@ -135,3 +136,23 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # optional for production
+=======
+<<<<<<< HEAD
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'api',
+]
+=======
+'relationship_app',
+>>>>>>> ce24b6e068ab3e8d4bca815c263a326773d82876
+>>>>>>> c9c43c597a189cbd67f9e9a22831cb8001d262ef

@@ -1,0 +1,1 @@
+This is a basic Django project created for the ALX Django Learning Lab.
