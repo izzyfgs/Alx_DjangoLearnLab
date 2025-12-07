@@ -1,3 +1,4 @@
+
 from django.shortcuts import render# blog/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
@@ -52,6 +53,9 @@ def profile_view(request):
     return render(request, 'blog/profile.html')
 
 
+
+
+from django.shortcuts import render
 
 
 # Create your views here.

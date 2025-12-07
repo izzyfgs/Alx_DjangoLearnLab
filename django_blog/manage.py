@@ -7,10 +7,6 @@ import sys
 def main():
     """Run administrative tasks."""
 
-
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_blog.settings')
-
-
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_blog.settings')
 
 
@@ -18,7 +14,6 @@ def main():
 
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api_project.settings')
-
 
 
     try:
