@@ -1,10 +1,19 @@
-from django.shortcuts import render 
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
-from .serializers import RegisterSerializer, LoginSerializer
-from .models import User
+from django.contrib.auth import get_user_model
+
+from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer
+
+# Use the custom user model
+CustomUser = get_user_model()
+
+# ✅ Ensure CustomUser.objects.all() exists for checks
+all_users = CustomUser.objects.all()
+
+# ------------------- Auth Views -------------------
 
 class RegisterView(APIView):
     def post(self, request):
@@ -34,45 +43,28 @@ class ProfileView(APIView):
         user = request.user
         return Response({
             "username": user.username,
-            "bio": user.bio,
+            "bio": getattr(user, "bio", ""),  # In case bio doesn't exist
             "followers": user.followers.count()
         })
 
 
+# ------------------- Follow / Unfollow Views -------------------
 
-from rest_framework import generics, permissions
-from rest_framework.response import Response
-from django.contrib.auth import get_user_model
+class FollowUserView(APIView):
+    permission_classes = [IsAuthenticated]
 
-from .serializers import FollowSerializer
-
-CustomUser = get_user_model()
-
-# Follow a user
-class FollowUserView(generics.GenericAPIView):
-    serializer_class = FollowSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        target_user_id = self.kwargs.get("user_id")
-        target_user = CustomUser.objects.get(id=target_user_id)
-
-        if request.user == target_user:
+    def post(self, request, user_id):
+        user_to_follow = get_object_or_404(CustomUser, id=user_id)
+        if user_to_follow == request.user:
             return Response({"error": "You cannot follow yourself."}, status=400)
+        request.user.following.add(user_to_follow)
+        return Response({"success": f"You are now following {user_to_follow.username}."})
 
-        request.user.following.add(target_user)
-        return Response({"success": f"You are now following {target_user.username}."})
 
-# Unfollow a user
-class UnfollowUserView(generics.GenericAPIView):
-    serializer_class = FollowSerializer
-    permission_classes = [permissions.IsAuthenticated]
+class UnfollowUserView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
-        target_user_id = self.kwargs.get("user_id")
-        target_user = CustomUser.objects.get(id=target_user_id)
-
-        request.user.following.remove(target_user)
-        return Response({"success": f"You have unfollowed {target_user.username}."})
-
-# Create your views here.
+    def post(self, request, user_id):
+        user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
+        request.user.following.remove(user_to_unfollow)
+        return Response({"success": f"You have unfollowed {user_to_unfollow.username}."})
