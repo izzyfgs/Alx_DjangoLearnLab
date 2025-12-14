@@ -40,5 +40,39 @@ class ProfileView(APIView):
 
 
 
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from django.contrib.auth import get_user_model
+
+from .serializers import FollowSerializer
+
+CustomUser = get_user_model()
+
+# Follow a user
+class FollowUserView(generics.GenericAPIView):
+    serializer_class = FollowSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        target_user_id = self.kwargs.get("user_id")
+        target_user = CustomUser.objects.get(id=target_user_id)
+
+        if request.user == target_user:
+            return Response({"error": "You cannot follow yourself."}, status=400)
+
+        request.user.following.add(target_user)
+        return Response({"success": f"You are now following {target_user.username}."})
+
+# Unfollow a user
+class UnfollowUserView(generics.GenericAPIView):
+    serializer_class = FollowSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        target_user_id = self.kwargs.get("user_id")
+        target_user = CustomUser.objects.get(id=target_user_id)
+
+        request.user.following.remove(target_user)
+        return Response({"success": f"You have unfollowed {target_user.username}."})
 
 # Create your views here.
