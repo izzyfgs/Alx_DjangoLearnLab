@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'accounts',
     'posts',  # <- ADD THIS LINE
+    'notifications',
 ]
+
 
 
 
