@@ -139,5 +139,25 @@ REST_FRAMEWORK = {
 
 
 
+# settings.py
+
+DEBUG = False
+
+# Add your domain or Heroku app name
+ALLOWED_HOSTS = ['your-app-name.herokuapp.com', '127.0.0.1']
+
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Collect static files here
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
